@@ -190,12 +190,138 @@ do note, this is a checked exception.
 From a Class, Method, Field, Constructor object,
 you can obtain a specific annotation associated with that object
 by calling the getAnnotation() on it.
+
+```java
 <A extends Annotation> getAnnotation(Class<A> annoType)
+```
+
+```java
 Annotation[] get Annotations() 
+```
+
+`annoType` is a Class Object that represent the annotation
+in which you are interested. the methods returns a
+reference to the annotation which is an object of annoType. 
+using this refernce, you can obtain the values associated with the annotation's members.
+
+
 ## Usage/Example
+```java
+import java.lang.annotation.*;
+import java.lang.reflect.*;
+
+@Retention(RetentionPolicy.RunTime)
+@interface MyAnno{
+    String str();
+    int val();
+}
+
+class Meta {
+    @myAnno(str = "Two Parameters", val=19)
+    public static void myMeth(String str, int i){
+        Meta ob = new Meta();
+        try{
+            Class<?> c = ob.getClass();
+            Method m = c.getMethod("myMeth", String.class, int.class);
+            MyAnno anno = m.getAnnotation(MyAnno.class);
+            System.out.println(anno.str() + " " + anno.val());
+        }
+        catch(NoSuchMethodException exc){
+            System.out.println("Method not found.");
+        }
+    }
+
+    public static void main(String args[]){
+        myMeth("test", 10);
+    }
+}
+```
+
+
 ## End Note
 
+For you to perform this reflection technique you need
+to access the reflection Api contain in the java.lang.reflect package.
 
+Actually, the methods `getAnnotation()` & `getAnnotations()` are defined
+by the `AnnotatedElement interface` which is defined by `java.lang.reflect`.
+
+This interface supports reflection for annotations
+and is implrmented by the classes `Method`, `Field`,
+`Constructor`, `Class`, `Package` among others.
+
+in addition to those two, AnnotatedElement also defines several methods
+```java
+// returns all non-inherited annotations
+Annotations[] getDeclaredAnnotations()
+```
+```java
+// returns true it the annotation is present
+default boolean isAnnotationPresent(Class<? extends Annotation> annoType)
+```
+
+
+
+
+
+
+
+
+
+# Annotations: Annotation Varieties
+## Annotations with Default Values
+```java
+@Retention(RetentionPolicy.RUNTIME)
+@interface MyAnno {
+    String str() default "Testing";
+    int val() default 9000;
+}
+```
+
+You can give annotation member default values that will be used 
+if no value is specified when the annotation is applied.
+
+```java
+// with no value
+@MyAnno()
+
+// with value
+@MyAnno(val=20)
+```
+
+
+## Annotations as Markers
+Marker annotation is a special kind tha contains no members.
+Its sole purpose is to mark an item. Thus its presence
+as an annotation is sufficient.
+
+```java
+@Retention(RetentionPolicy.RUNTIME)
+@interface MyAnno{}
+```
+
+The Best way to determine if a marker annotation is present
+is to use the method `isAnnotationPresent()` defined by
+the `AnnotatedElement`.
+
+
+## Annotations with single member
+Single member annotations contains only one members.
+It works like a normal annotation except that 
+it allows a shorthand form of specifying the value of the member.
+
+```java
+// declaration
+@Retention(RetentionPolicy.RUNTIME)
+@interface MySingle {
+    int value();
+}
+
+// usage
+@MySingle(100)
+```
+you can use the single-value syntax when applying an annotation
+that has other members, but those other members must all have default values.
 
 
 

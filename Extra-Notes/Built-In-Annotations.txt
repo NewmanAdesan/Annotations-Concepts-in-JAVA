@@ -1,0 +1,149 @@
+
+
+
+Built-In Annotation
+
+    BUILT-IN (intro)
+        - there are many built-in annotations
+        - most are specialized , but Nine are general purpose
+
+        - Four are imported from `java.lang.annotations`
+        - @Retention, @Documented, @Target, @Inherited
+
+        - Five are included in `java.lang`
+        - @Override, @Deprecated, @FunctinalInterface, 
+        - @SafeVarargs, @SuppressWarning
+
+        - java.lang.annotation also includes the annotations
+        - `Repeatable` and `Naive`. 
+        - Reapeatable supports Repeatable annotations (more on this soon)
+        - Native annotates a field that can be accessed by native code.
+
+
+    
+    BUILT-IN ( java.lang.annotation - @Retention )
+        - designed to be used only as an annotation to another annotation
+        - it specifies the retention policy of the annotation
+
+
+    
+    BUILT-IN ( java.lang.annotation - @Documented )
+        - an annotation to another annotation
+        - it is a marker annotation that tells a tool
+        - that an annotation is to be documented.
+
+
+    
+    BUILT-IN ( java.lang.annotation - @Inherited )
+        - a marker annotatin designed to be used
+        - as an annotation to another annotation
+
+        - it appects only annotatins that will 
+        - be used on class declaration.
+        - it causes the annotations for a superclass 
+        - to be inherited by a subclass.
+
+        - therefore, when a request for a specific annotation
+        - is made to the subclass, if that annotation 
+        - is not present, in the subclass,
+        - then its superclass is checked.
+
+        - if that annotation is present in the superclass
+        - and if it is annotated with @Inherited,
+        - then that annotation will be returned.
+
+
+    
+    BUILT-IN ( java.lang.annotation - @Target )
+        - an annotation to another annotation
+        - specifies the `types` of the items
+        - to which an annotation will be applied.
+          DO YOU GET IT
+
+        - @Target can be used on an annotation,
+        - specifying it will be used on constructors
+        - or specifying it will be used on methods only.
+
+        - @Target takes one argument, which is an array of constants
+        - meaning in this case, the argument to this annotation is an array.
+        - meaning you can specigy two or more constants
+
+        - constants in this array are from 
+        - the constants of the `ElementType Enumeration`.
+        - the constants from this enumeration specifies 
+        - the types of declarations to which the annotation can be applied.
+
+
+    
+    BUILT-IN ( java.lang.annotation - @Target )
+        - let's look at the ElementType Constants
+        - ANNOTATION_TYPE
+        - CONSTRUCTOR
+        - FIELD 
+        - LOCAL_VARIABLE 
+        - METHOD 
+        - MODULE
+        - PACKAGE 
+        - PARAMETER
+        - RECORD_COMPONENT
+        - TYPE  --  class, interface, enumeration
+        - TYPE_PARAMETER
+        - TYPE_USE
+
+
+    
+    BUILT-IN ( java.lang - @Override )
+        - a Marker Annotation that can be used only on methods.
+        - a method annotated with @Override MUST overide a method from a superclass
+        - if it doesn't, a compile-time error will result.
+        
+        - with this, no need to make the superclass `abstract` 
+        - do you get, do you remember the concept of abstract
+        - such that once a class is made abstract, its subclasses must override its method.
+        - with @Override concept now available, 
+        - no need to use abstract FOR THAT PURPOSE
+
+
+    
+    BUILT-IN ( java.lang - @Deprecated )
+        - indicates that a declaration is obsolete and not recommended for use
+        - beginning with JDK9, this annotation allows you to specify
+        - the JAVA version in which the deprecation occured
+        - and whether the deprecated element is slated for removal.
+
+
+    
+    BUILT-IN ( java.lang - @FunctionalInterface )
+        - this is a marker annotation designed for use on interfaces
+        - it indicates that the annotated interface is a functional interface
+
+        - a functional interface is an interface that contains
+        - one and only one abstract method. 
+        - functional interfaces are used by lambda expressions.
+
+        - this annotation is not needed to create a functional interface.
+        - it's just purely informational. if the annotated interface 
+        - is not a functional interface, a compilation error will be reported.
+
+
+    
+    BUILT-IN ( java.lang - @SafeVarargs )
+        - a marker annotation that can be applied to methods and constructors.
+        - it indicates no unsafe actions related to a varargs parameter occurence.
+
+        - it is used to suppress unchecked warnings an otherwise safe code
+        - as it relates to `non-reifiable vararg types` and `parameterized array instantiation`
+        - a non-reifiable type is, essentially, a generic type
+
+        - it must be applied only to varargs methods & constructors
+        - methods  must also be static, final or private.
+
+
+    
+    BUILT-IN ( java.lang - @SuppressWarnings )
+        - This specifies that one or more warnings
+        - that might be issued by the compiler are to be suppressed
+        - the warnings to specigy are specified by Name, in String form.
+
+
+
