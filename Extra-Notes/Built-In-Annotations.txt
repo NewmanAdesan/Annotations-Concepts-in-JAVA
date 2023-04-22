@@ -64,9 +64,9 @@ Built-In Annotation
         - specifying it will be used on constructors
         - or specifying it will be used on methods only.
 
-        - @Target takes one argument, which is an array of constants
+        - @Target takes one argument, a constant or an array of constants
         - meaning in this case, the argument to this annotation is an array.
-        - meaning you can specigy two or more constants
+        - meaning you can specify two or more constants
 
         - constants in this array are from 
         - the constants of the `ElementType Enumeration`.

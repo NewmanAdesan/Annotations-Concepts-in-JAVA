@@ -10,6 +10,17 @@ Discover the power of Java Annotations! This repository explores how Annotations
 
 
 
+
+
+
+
+
+
+
+
+
+
+
 # Annotations: The Basic Concept
 ## The Idea
 JAVA provides a feature that enables you<br />
@@ -137,14 +148,14 @@ that represent the class whose annotations you want to obtain.
 
 There are various way to obtain a `Class` Object,
 One way is throu the getClass() method defined by `Object`
-with blueprint `final Class<?> getClass()`
+with signature `final Class<?> getClass()`
 this method returns the class object that represent the invoking object.
 
 Another way is via a `class literal`. 
 this is used whenever the class object of a known class is needed.
 
 ```java
-Class New { 
+class New { 
   // ... 
 }
 
@@ -174,7 +185,7 @@ it requires two arguments, the name of the method and
 the class object representing the argument types of the method. 
 
 ```java
-// getMethod declaration blueprint
+// getMethod declaration signature
 Method getMethod(String methName, Class<?>...paramTypes)
 ```
 
@@ -202,7 +213,8 @@ Annotation[] get Annotations()
 `annoType` is a Class Object that represent the annotation
 in which you are interested. the methods returns a
 reference to the annotation which is an object of annoType. 
-using this refernce, you can obtain the values associated with the annotation's members.
+using this refernce, you can obtain the values 
+associated with the annotation's members.
 
 
 ## Usage/Example
@@ -322,6 +334,236 @@ it allows a shorthand form of specifying the value of the member.
 ```
 you can use the single-value syntax when applying an annotation
 that has other members, but those other members must all have default values.
+
+
+## Built-In Annotations
+there are many built-in annotations
+most are specialized , but Nine are general purpose
+
+Four are imported from `java.lang.annotations`
+`@Retention`, `@Documented`, `@Target`, `@Inherited`
+
+Five are included in `java.lang`
+`@Override`, `@Deprecated`, `@FunctinalInterface`, 
+`@SafeVarargs`, `@SuppressWarning`
+
+Visit [Built-In-Annotations](./Extra-Notes/Built-In-Annotations.md) for more info on each of them.
+
+
+## @Target Built-In Annotation
+we would talk about the @Target annotation here,
+because you will need it to understand the coming concept.
+
+it is designed to be used only as an annotation to another annotation.
+it specifies the `type` of the items 
+to which an annotation will be applied.
+
+for example it informs that the declaration an annotation 
+must be applied to is a constructor or method e.t.c
+
+```java
+@Target(ElementType.Method)
+@interface Recommended {}
+```
+
+@Target takes one argument, a constant or an array of constants.
+this constants are of the `ElementType enumeration`
+some example of this constants are `ANNOTATION_TYPE`,
+C`ONSTRUCTOR`, `FIELD`, `METHOD`, `TYPE`, `TYPE_USE`, `TYPE_PARAMETER`
+
+
+
+
+
+
+
+
+
+# Annotations: Type Annotation
+## The Concept
+Annotations were originally allowed only on declarations however, 
+for modern versions of JAVA Annotatins can also be specified 
+in most cases in which a type is used.
+
+For Example, You can Annotate:
+* the return type of a method
+* the type of `this argument` of a method
+* a cast
+* array levels (2D, 3D)
+* an inherited class
+* a `throws` clause
+* generic types (generic type parameter bonds & generic type argument)
+
+Type annotations are important because they enable tools 
+to perform additional checks on code to help prevent errors.
+Understand that, as a general rule, 
+javac will not perform these checks itself.
+
+
+## A Quick Look
+Type Annotation must include the `@Target` annotation,
+specifying the constants `ElementType.TYPE_USE` as a target
+
+```java
+
+@Target(ElementType.TYPE_USE)
+@interface TypeAnno { }
+
+```
+A Type Annotation applies to the type that the annotation precedes.
+check out how we make @TypeAnno annotate the NullPointerException
+in the throws clause.
+
+```java
+
+void myMeth() throws @TypeAnno NullPointerException { ... }
+
+```
+
+Check out how we make `@TypeAnno` annotate the `this argument` of a method.
+`this` is an implicit argument to all instance methods
+and it refers to the invoking object. by explicitly 
+declaring it, you can now annotate its type.
+
+```java
+
+class SomeClass {
+  int myMeth( @TypeAnno SomeClass this, int i){
+    ...
+  }
+}
+
+```
+
+Note that if you do explictly declare `this`, it must be the first parameter.
+
+
+## Usage/Example
+```java
+import java.lang.annotation.*;
+import java.lang.reflect.*;
+
+@Target(ElementType.TYPE_USE)
+@interface TypeAnno {}
+
+@Target(ElementType.TYPE_USE)
+@interface NotZeroLen {}
+
+@Target(ElementType.TYPE_USE)
+@interface Unique {}
+
+@Target(ElementType.TYPE_USE)
+@interface EmptyOk {}
+
+@Target(ElementType.TYPE_USE)
+@interface Recommended {}
+
+@Target(ElementType.TYPE_USE)
+@interface MaxLen {
+  int value();
+}
+
+@Target(ElementType.TYPE_PARAMETER)
+@interface What {
+  String description();
+}
+```
+
+```java
+
+// type annotate the class type parameter
+class TypeAnnoDemo<@What(description="Generic data type") T>{
+
+  // type annotate on the constructor
+  public @Unique TypeAnnoDemo() {}
+
+  // type annotate the datatype String, not the field
+  @TypeAnno String str;
+
+  // annotates the field "test"
+  @EmptyOk String test;
+
+  // type annotate the "this" argument
+  public int f(@TypeAnno TypeAnnoDemo<T> this, int x) { return 10; }
+
+  // type annotate the return type
+  public @TypeAnno Integer f2(intj, intk) { return j+k; }
+
+  // annotate the method declaration
+  public @Recommended Integer f3(String str){ return str.length() / 2; }
+
+  // type annotate the throws clause
+  public void f4() throws @TypeAnno NullPointerException { // ... }
+
+  // annotate array levels
+  String @MaxLen(10) [] @NotZeroLen [] w;
+
+  // type annotate the type of an array
+  @TypeAnno Integer[] vec;
+
+}
+```
+
+```java
+public static void myMeth(int i){
+  // type annotation on a type argument
+  TypeAnnoDemo<@TypeAnno Integer> ob = new TypeAnnoDemo<@TypeAnno Integer>();
+
+  // type annotation on object instantiation
+  @Unique TypeAnnoDemo<Integer> ob2 = new @Unique TypeAnnoDemo<Integer>();
+
+  // type annotation on a cast
+  Object x = Integer.valueOf(10);
+  Integer y = (@TypeAnno Integer) x;
+
+}
+
+public static void main(String[] args){ myMeth(10); }
+
+// type annotation a superclass
+class SomeClass extends @TypeAnno TypeAnnoDemo<Boolean> {}
+```
+## No Ambiguities
+Pay attention to this two method declaration
+```java
+  // type annotate the return type
+  public @TypeAnno Integer f2(intj, intk) { 
+    return j+k; 
+  }
+
+  // annotate the method declaration
+  public @Recommended Integer f3(String str){
+    return str.length() / 2; 
+  }
+```
+Notice that in both cases, 
+an annotation precedes the method's return type (Integer)
+however, the two annotations annotate two different things.
+
+The differnce is in the specification of the `@Target` annotation.
+`@TypeAnno` annotate f2's return type because
+its targe specified `ElementType.TYPE_USE`.
+`@Recommended` annotates the method declaration because
+it has it's taget specified as `Element.METHOD`.
+
+Therefore, the target specification
+
+
+## End-Note
+Therefore, the target specification is used to 
+eliminate what, at first glance appears to be an ambiguity
+between the annotation of a method declaration
+and the annotation of a method type.
+
+
+
+
+
+
+
+
+
+# Annotations: Repeating Annotation
 
 
 
