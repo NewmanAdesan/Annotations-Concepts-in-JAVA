@@ -10,7 +10,19 @@ Discover the power of Java Annotations! This repository explores how Annotations
 
 
 
+## Table of contents
 
+- [Annotations: The Basic Concept](#annotations:-The-Basic-Concept)
+  - [The challenge](#the-challenge)
+  - [Screenshot](#screenshot)
+  - [Links](#links)
+- [My process](#my-process)
+  - [Built with](#built-with)
+  - [What I learned](#what-i-learned)
+  - [Continued development](#continued-development)
+  - [Useful resources](#useful-resources)
+- [Author](#author)
+- [Acknowledgments](#acknowledgments)
 
 
 
@@ -251,7 +263,6 @@ class Meta {
 
 
 ## End Note
-
 For you to perform this reflection technique you need
 to access the reflection Api contain in the java.lang.reflect package.
 
@@ -564,7 +575,131 @@ and the annotation of a method type.
 
 
 # Annotations: Repeating Annotation
+## The Idea
+the idea of Repeating Annotation is to have two or more objects
+of an annotation class and attach them all to a declaration
+```java
+@MyAnno(str="first annotation", val=-1)
+@MyAnno(str="Second annotation", val=100)
+public static void myMeth(String str, int i) {
+  //...
+}
+```
 
+
+## The Setup
+One way JAVA implements this is that you would create two different annotations
+* Annotation A
+* Annotation B
+
+if you repeate Annotation A on a declaration, JAVA would store 
+all objects of the annotation you added to the declaration in an array variable. 
+
+You would separately create Annotation B which will only have one member,
+which would be the the array variable. have a look
+```java
+@interface MyRepeatedAnnos{
+  MyAnno[] value();
+}
+```
+
+Lastly, we need to connect Annotation B  to Annotation A
+stating that it will be a container to store all Annotation A
+if it is repeated on a declaration.
+```java
+@Repeatable( MyRepeatedAnnos.class )
+@interface MyAnno {
+  String str() default "Testing";
+  int val() default 9000;
+}
+```
+This is where the Built-in Annotation `Repeatable` comes in.
+it specifies a particular annotation (Annotation A) is repeatable,
+and also specifies the container annotation (Annotation B).
+
+
+## The Access
+We access the repeated annotation using a method such as `getAnnotation()`
+In this case, we use the container annotation (Annotation B),
+not the repeatable annotation itself (Annotation A)
+
+```java
+  ...
+  Annotation anno = m.getAnnotation(MyRepeatedAnnos.class);
+  ...
+```
+
+Another way to obtain the repeated annotations 
+is to use one of the methods in AnnotatedElement
+that can operate directly on a repeated annotation
+
+these are `getAnnotationByType()` and `getDeclaredAnnotationsByType()` with signature 
+`default <T extends Annotation> T[] getAnnotationsByType(Class<T> annoType)`
+
+```java
+Annotation[] annos = m.getAnnotationsByType(myAnnos.class);
+for (Annotation a:annos){
+  System.out.println(a);
+}
+```
+
+## Usage/Example
+
+```java
+@Retention(RetentionPolicy.RUNTIME)
+@Repeatable(MyRepeatedAnnos.class)
+@interface MyAnno {
+  String str() default "Testing";
+  int val() default 9000;
+}
+
+@Retention(RetentionPolicy.RUNTIME)
+@interface MyRepeatedAnnos {
+  MyAnno[] value();
+}
+```
+```java
+class RepeatAnno { 
+  @MyAnno(str="first annotation", val=-1)
+  @MyAnno(str="Second annotation", val=100)
+  public static void myMeth(String str, int i) {
+    RepeatAnno ob = new RepeatAnno();
+
+    try{
+      Method m = ob.getClass.getMethod("myMeth", String.class, int.class);
+      Annotation anno = m.getAnnotation(MyRepeatedAnnos.class);
+
+    } catch (NoSuchMethodException exc) {
+      System.out.println("Method Not Found")
+    }
+  }
+
+  public static void main(String[] args){
+    myMeth("test", 10);
+  }
+
+}
+```
+
+
+
+
+
+
+
+
+
+# Annotations: Annotation Restrictions
+* No annotation can inherit another
+* All method declared by an annotation must be withous parameters
+* All methods declard by an annotation must return one of the following
+  * A primitive type
+  * An object of type `String` or `Class`
+  * An object of an `enum` type
+  * An object of another annotation type
+  * An Array of a legal type
+* Annotations cannot be generic
+* Annotation methods cannot specigy a `throws` clause
 
 
 Part 1: Basic Annotation Concepts
