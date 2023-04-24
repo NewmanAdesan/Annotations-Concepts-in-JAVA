@@ -471,6 +471,7 @@
 
   
  ### No Ambiguities
+ <img src="./ReadMe-Images/type-annotation-no-ambiguity.svg" style="width:600px; height:auto" alt="A code snippet to explain No Ambiguities in type annotation"/>
   Pay attention to this two method declaration
   ```java
     // type annotate the return type
