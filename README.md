@@ -124,10 +124,7 @@
   you can annotate `type use` which is a concept<br />
   we would delve into later on.<br />
 
-  ```java
-  @MyAnno(str="Annotation Example", val=100)
-  public static void myMeth() { ... }
-  ```
+  <img src="./ReadMe-Images/annotation-simple-usage.svg" style="width:600px; height:auto" alt="Showing a simple annotation Declared">
 
   * Note that annotations precedes their declaration
   * Notice that name of the annotation is preceeded by `@`<br />
@@ -472,92 +469,7 @@
 
   <img src="./ReadMe-Images/type-annotation-example-D.png" style="width:600px; height:auto" alt="A simple example to showcase type annotation part D"/>
 
-  ```java
-  import java.lang.annotation.*;
-  import java.lang.reflect.*;
-
-  @Target(ElementType.TYPE_USE)
-  @interface TypeAnno {}
-
-  @Target(ElementType.TYPE_USE)
-  @interface NotZeroLen {}
-
-  @Target(ElementType.TYPE_USE)
-  @interface Unique {}
-
-  @Target(ElementType.TYPE_USE)
-  @interface EmptyOk {}
-
-  @Target(ElementType.TYPE_USE)
-  @interface Recommended {}
-
-  @Target(ElementType.TYPE_USE)
-  @interface MaxLen {
-    int value();
-  }
-
-  @Target(ElementType.TYPE_PARAMETER)
-  @interface What {
-    String description();
-  }
-  ```
-
-  ```java
-
-  // type annotate the class type parameter
-  class TypeAnnoDemo<@What(description="Generic data type") T>{
-
-    // type annotate on the constructor
-    public @Unique TypeAnnoDemo() {}
-
-    // type annotate the datatype String, not the field
-    @TypeAnno String str;
-
-    // annotates the field "test"
-    @EmptyOk String test;
-
-    // type annotate the "this" argument
-    public int f(@TypeAnno TypeAnnoDemo<T> this, int x) { return 10; }
-
-    // type annotate the return type
-    public @TypeAnno Integer f2(intj, intk) { return j+k; }
-
-    // annotate the method declaration
-    public @Recommended Integer f3(String str){ return str.length() / 2; }
-
-    // type annotate the throws clause
-    public void f4() throws @TypeAnno NullPointerException { // ... }
-
-    // annotate array levels
-    String @MaxLen(10) [] @NotZeroLen [] w;
-
-    // type annotate the type of an array
-    @TypeAnno Integer[] vec;
-
-    ...
-
-  }
-  ```
-
-  ```java
-  public static void myMeth(int i){
-    // type annotation on a type argument
-    TypeAnnoDemo<@TypeAnno Integer> ob = new TypeAnnoDemo<@TypeAnno Integer>();
-
-    // type annotation on object instantiation
-    @Unique TypeAnnoDemo<Integer> ob2 = new @Unique TypeAnnoDemo<Integer>();
-
-    // type annotation on a cast
-    Object x = Integer.valueOf(10);
-    Integer y = (@TypeAnno Integer) x;
-
-  }
-
-  public static void main(String[] args){ myMeth(10); }
-
-  // type annotation a superclass
-  class SomeClass extends @TypeAnno TypeAnnoDemo<Boolean> {}
-  ```
+  
  ### No Ambiguities
   Pay attention to this two method declaration
   ```java
@@ -671,43 +583,6 @@
   <img src="./ReadMe-Images/repeating-annotation-example-A.png" style="width:600px; height:auto" alt="A simple example to showcase repeating annotation part A"/>
 
   <img src="./ReadMe-Images/repeating-annotation-example-B.png" style="width:600px; height:auto" alt="A simple example to showcase repeating annotation part B"/>
-
-
-  ```java
-  @Retention(RetentionPolicy.RUNTIME)
-  @Repeatable(MyRepeatedAnnos.class)
-  @interface MyAnno {
-    String str() default "Testing";
-    int val() default 9000;
-  }
-
-  @Retention(RetentionPolicy.RUNTIME)
-  @interface MyRepeatedAnnos {
-    MyAnno[] value();
-  }
-  ```
-  ```java
-  class RepeatAnno { 
-    @MyAnno(str="first annotation", val=-1)
-    @MyAnno(str="Second annotation", val=100)
-    public static void myMeth(String str, int i) {
-      RepeatAnno ob = new RepeatAnno();
-
-      try{
-        Method m = ob.getClass.getMethod("myMeth", String.class, int.class);
-        Annotation anno = m.getAnnotation(MyRepeatedAnnos.class);
-
-      } catch (NoSuchMethodException exc) {
-        System.out.println("Method Not Found")
-      }
-    }
-
-    public static void main(String[] args){
-      myMeth("test", 10);
-    }
-  }
-  ```
-
 
 
 
