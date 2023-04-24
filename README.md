@@ -471,8 +471,10 @@
 
   
  ### No Ambiguities
- <img src="./ReadMe-Images/type-annotation-no-ambiguity.svg" style="width:600px; height:auto" alt="A code snippet to explain No Ambiguities in type annotation"/>
   Pay attention to this two method declaration
+  
+  <img src="./ReadMe-Images/type-annotation-no-ambiguity.svg" style="width:600px; height:auto" alt="A code snippet to explain No Ambiguities in type annotation"/>
+  
   ```java
     // type annotate the return type
     public @TypeAnno Integer f2(intj, intk) { 
