@@ -649,7 +649,11 @@
   }
   ```
 
- ### Usage/Example
+ ### Example
+  <img src="./ReadMe-Images/repeating-annotation-example-A.png" style="width:600px; height:auto" alt="A simple example to showcase repeating annotation part A/>
+
+  <img src="./ReadMe-Images/repeating-annotation-example-B.png" style="width:600px; height:auto" alt="A simple example to showcase repeating annotation part B/>
+
 
   ```java
   @Retention(RetentionPolicy.RUNTIME)
@@ -683,7 +687,6 @@
     public static void main(String[] args){
       myMeth("test", 10);
     }
-
   }
   ```
 
