@@ -91,7 +91,7 @@
   As you would expect,<br />
   java implemets annotations from an object oriented perspective.<br />
 
-  <img src="./ReadMe-Images/annotation-simple-creation.png" style="width:600px; height:auto" alt="Showing a simple annotation Declared">
+  <img src="./ReadMe-Images/annotation-simple-creation.svg" style="width:600px; height:auto" alt="Showing a simple annotation Declared">
 
   Notice the `@` that precedes the keyword `interface`<br />
   telling the compiler that an annotation type is being declared.<br />
