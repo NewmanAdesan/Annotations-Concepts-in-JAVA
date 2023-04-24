@@ -1,3 +1,21 @@
+
+<p align="center">
+  <img src="./ReadMe-Images/JAVA_Concepts.png">
+</p>
+
+<p align="center">
+  <img src="https://img.shields.io/badge/JAVA-007396.svg" alt="JAVA badge" style="height: 25px;">
+  <img src="https://img.shields.io/badge/Retention-6A5ACD.svg" alt="Retention badge" style="height: 25px;"> 
+  <img src="https://img.shields.io/badge/Reflection-4E4E4E.svg" alt="Reflection badge" style="height: 25px;">
+  <img src="https://img.shields.io/badge/Type%20Annotation-FFA500.svg" alt="Type Annotation badge" style="height: 25px;">
+  <img src="https://img.shields.io/badge/Repeating%20Annotation-FF8C00.svg" alt="Repeating Annotation badge" style="height: 25px;">
+</p>
+
+
+
+
+
+
 # Java Annotations: A Comprehensive Guide
   Discover the power of Java Annotations! <br>
   This repository explores how Annotations can <br>
