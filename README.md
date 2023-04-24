@@ -271,9 +271,9 @@
 
 
  ### Example
- <img src="./ReadMe-Images/reflection-and-annotation-example.png" style="width:600px; height:auto" alt="A simple example to showcase the reflection and annotation concept/>
+ <img src="./ReadMe-Images/reflection-and-annotation-example.png" style="width:600px; height:auto" alt="A simple example to showcase the reflection and annotation concept"/>
 
- <img src="./ReadMe-Images/reflection-and-annotation-example-B.png" style="width:600px; height:auto" alt="A simple example to showcase the reflection and annotation concept/>
+ <img src="./ReadMe-Images/reflection-and-annotation-example-B.png" style="width:600px; height:auto" alt="A simple example to showcase the reflection and annotation concept"/>
 
 
 
@@ -395,7 +395,7 @@
   @Target takes one argument, a constant or an array of constants.<br>
   this constants are of the `ElementType enumeration`<br>
   some example of this constants are `ANNOTATION_TYPE`,<br>
-  C`ONSTRUCTOR`, `FIELD`, `METHOD`, `TYPE`, `TYPE_USE`, `TYPE_PARAMETER`
+  `CONSTRUCTOR`, `FIELD`, `METHOD`, `TYPE`, `TYPE_USE`, `TYPE_PARAMETER`
 
 
 
@@ -464,13 +464,13 @@
 
 
  ### Example
-  <img src="./ReadMe-Images/type-annotation-example-A.png" style="width:600px; height:auto" alt="A simple example to showcase type annotation part A/>
+  <img src="./ReadMe-Images/type-annotation-example-A.png" style="width:600px; height:auto" alt="A simple example to showcase type annotation part A"/>
 
-  <img src="./ReadMe-Images/type-annotation-example-B.png" style="width:600px; height:auto" alt="A simple example to showcase type annotation part B/>
+  <img src="./ReadMe-Images/type-annotation-example-B.png" style="width:600px; height:auto" alt="A simple example to showcase type annotation part B"/>
 
-  <img src="./ReadMe-Images/type-annotation-example-C.png" style="width:600px; height:auto" alt="A simple example to showcase type annotation part C/>
+  <img src="./ReadMe-Images/type-annotation-example-C.png" style="width:600px; height:auto" alt="A simple example to showcase type annotation part C"/>
 
-  <img src="./ReadMe-Images/type-annotation-example-D.png" style="width:600px; height:auto" alt="A simple example to showcase type annotation part D/>
+  <img src="./ReadMe-Images/type-annotation-example-D.png" style="width:600px; height:auto" alt="A simple example to showcase type annotation part D"/>
 
   ```java
   import java.lang.annotation.*;
@@ -668,9 +668,9 @@
   ```
 
  ### Example
-  <img src="./ReadMe-Images/repeating-annotation-example-A.png" style="width:600px; height:auto" alt="A simple example to showcase repeating annotation part A/>
+  <img src="./ReadMe-Images/repeating-annotation-example-A.png" style="width:600px; height:auto" alt="A simple example to showcase repeating annotation part A"/>
 
-  <img src="./ReadMe-Images/repeating-annotation-example-B.png" style="width:600px; height:auto" alt="A simple example to showcase repeating annotation part B/>
+  <img src="./ReadMe-Images/repeating-annotation-example-B.png" style="width:600px; height:auto" alt="A simple example to showcase repeating annotation part B"/>
 
 
   ```java
